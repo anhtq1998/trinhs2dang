@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gửi người con gái anh thương ❤️</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #cbb4d4;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    /* 1. MÀN HÌNH KHÓA BÀN PHÍM ĐIỆN THOẠI (GIỐNG ẢNH 100%) */
+    .password-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      /* Màu hồng ngọt ngào */
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      transition: all 0.5s ease;
+    }
+
+    /* Khung ảnh của bạn gái */
+    .avatar-box {
+      width: 150px;
+      height: 150px;
+      border-radius: 30px;
+      /* Bo góc vuông như ảnh mẫu */
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background: #fff;
+      margin-bottom: 15px;
+    }
+
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .heart-dot {
+      color: #fff;
+      font-size: 0.8rem;
+      margin-bottom: 25px;
+      opacity: 0.8;
+    }
+
+    .pass-title {
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 4 ô tròn hiển thị trạng thái nhập pass */
+    .dots-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #fff;
+      border-radius: 50%;
+      transition: background-color 0.15s ease;
+    }
+
+    .dot.active {
+      background-color: #fff;
+    }
+
+    /* Bàn phím số chuẩn liên kết */
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 25px;
+      width: 280px;
+      justify-items: center;
+    }
+
+    .key {
+      width: 70px;
+      height: 70px;
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .key:active {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .key.blank {
+      border: none;
+      cursor: default;
+    }
+
+    .key.blank:active {
+      background: none;
+    }
+
+    .key img {
+      width: 24px;
+      filter: invert(1);
+    }
+
+    /* Icon xóa màu trắng */
+
+    /* Hiệu ứng rung màn hình khi nhập sai */
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-10px);
+      }
+
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.3s ease-in-out;
+    }
+
+    /* 2. KHUNG LÁ THƯ TẬP CHỒNG (SAU KHI MỞ KHÓA) */
+    .letter-stack {
+      position: relative;
+      width: 90%;
+      max-width: 500px;
+      aspect-ratio: 1/1;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.8s ease;
+    }
+
+    .letter-paper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      border: 1px solid #eaeaea;
+    }
+
+    .layer1 {
+      transform: rotate(-1.5deg) translate(-4px, 4px);
+      z-index: 1;
+    }
+
+    .layer2 {
+      transform: rotate(1deg) translate(3px, -2px);
+      z-index: 2;
+    }
+
+    .main-letter {
+      z-index: 3;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      background-image: linear-gradient(#e8e8e8 1px, transparent 1px);
+      background-size: 100% 2.2rem;
+      background-position-y: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #4a2840;
+      text-align: center;
+      margin-top: 15%;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .cute-bear {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+      font-size: 2.5rem;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 25px;
+      right: 35px;
+      font-family: sans-serif;
+      font-size: 0.9rem;
+      color: #b5b5b5;
+      letter-spacing: 1px;
+    }
+
+    /* Nút lật trang */
+    .nav-buttons {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      z-index: 4;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #cd5c5c;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .nav-btn:hover {
+      transform: scale(1.3);
+    }
+
+    .nav-btn:disabled {
+      color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* RESPONSIVE CHO ĐIỆN THOẠI */
+    @media (max-width: 480px) {
+      .password-screen {
+        padding-top: 40px;
+      }
+
+      .avatar-box {
+        width: 110px;
+        height: 110px;
+      }
+
+      .keypad {
+        width: 100%;
+        max-width: 260px;
+        gap: 16px 20px;
+      }
+
+      .key {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+
+      .letter-stack {
+        width: 92%;
+        aspect-ratio: unset;
+        height: 80vh;
+        height: 80dvh;
+      }
+
+      .main-letter {
+        padding: 25px 20px;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        margin-top: 0;
+        line-height: 1.5;
+      }
+
+      .cute-bear {
+        font-size: 1.8rem;
+        bottom: 15px;
+        left: 15px;
+      }
+
+      .page-number {
+        bottom: 15px;
+        right: 20px;
+        font-size: 0.8rem;
+      }
+
+      .nav-buttons {
+        bottom: 12px;
+        gap: 30px;
+      }
+    }
+
+    /* OVERLAY TỐI TOÀN MÀN HÌNH + NÚT XEM ALBUM ẢNH SAU KHI ĐỌC HẾT THƯ */
+    .end-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: background 1s ease, opacity 1s ease;
+    }
+
+    .end-overlay.show {
+      background: rgba(0, 0, 0, 0.75);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .album-btn {
+      background: #ff7eb3;
+      color: #fff;
+      border: none;
+      padding: 14px 26px;
+      border-radius: 30px;
+      font-family: sans-serif;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .album-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ALBUM ẢNH - SỔ LẬT 3D, MỞ 2 TRANG SONG SONG */
+    .album-wrap {
+      position: relative;
+      width: 92%;
+      max-width: 900px;
+      aspect-ratio: 16/10;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: all 0.8s ease;
+      display: none;
+      perspective: 2500px;
+    }
+
+    .album-base {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .album-base-half {
+      position: relative;
+      width: 50%;
+      height: 100%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 20px;
+    }
+
+    .album-base::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 12px;
+      margin-left: -6px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.12));
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    .album-page {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+      pointer-events: none;
+    }
+
+    .album-page.flipped {
+      transform: rotateY(-180deg);
+    }
+
+    .album-page-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 20px;
+    }
+
+    .album-page-face.front {
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.08) inset;
+    }
+
+    .album-page-face.back {
+      transform: rotateY(180deg);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08) inset;
+    }
+
+    .album-photo {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .album-photo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.12),
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .album-caption {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: #4a2840;
+      text-align: center;
+      margin-top: 10px;
+      min-height: 1.4em;
+    }
+
+    .album-page-number {
+      position: absolute;
+      bottom: 10px;
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      color: #b5b5b5;
+      letter-spacing: 1px;
+    }
+
+    .album-base-half.left .album-page-number,
+    .album-page-face.back .album-page-number {
+      left: 18px;
+    }
+
+    .album-base-half.right .album-page-number,
+    .album-page-face.front .album-page-number {
+      right: 18px;
+    }
+
+    /* BÌA ALBUM - PHONG CÁCH CŨ, DA KEM (phủ toàn bộ khung lúc đóng) */
+    .album-cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+      z-index: 50;
+      border-radius: 10px;
+    }
+
+    .album-cover.flipped {
+      transform: rotateY(-170deg);
+    }
+
+    .album-cover-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.5), transparent 60%),
+        radial-gradient(ellipse at 80% 90%, rgba(120, 90, 60, 0.12), transparent 55%),
+        linear-gradient(135deg, #ede4d3 0%, #e3d8c3 50%, #ddcfb6 100%);
+      box-shadow: 0 0 0 1px rgba(120, 100, 70, 0.15) inset, 0 0 25px rgba(90, 70, 40, 0.15) inset;
+    }
+
+    .album-cover-face.front {
+      cursor: pointer;
+    }
+
+    .album-cover-face.back {
+      transform: rotateY(180deg);
+      background:
+        radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(135deg, #f1e9db 0%, #e8ddc9 100%);
+    }
+
+    .album-cover-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.4rem;
+      letter-spacing: 3px;
+      color: #5a4a35;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .album-cover-subtitle {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #8a7a5e;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    .album-cover-hint {
+      position: absolute;
+      bottom: 18px;
+      font-family: sans-serif;
+      font-size: 0.75rem;
+      color: #a3927a;
+      letter-spacing: 0.5px;
+    }
+
+    .album-cover.flipped {
+      pointer-events: none;
+      visibility: hidden;
+      transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 1s;
+    }
+
+    .album-spine {
+      position: absolute;
+      left: 50%;
+      top: 3%;
+      bottom: 3%;
+      width: 14px;
+      margin-left: -7px;
+      background: linear-gradient(90deg, #d8cbb0, #c9baa0 50%, #d8cbb0);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+      z-index: 60;
+      border-radius: 2px;
+      display: none;
+    }
+
+    .album-wrap.cover-open .album-spine {
+      display: block;
+    }
+
+    .album-nav-buttons {
+      position: absolute;
+      bottom: -55px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      z-index: 30;
+    }
+
+    @media (max-width: 480px) {
+      .album-wrap {
+        width: 94%;
+        max-width: 420px;
+        aspect-ratio: 4/5;
+      }
+
+      .album-caption {
+        font-size: 0.9rem;
+      }
+
+      .album-cover-title {
+        font-size: 1.7rem;
+      }
+
+      .album-nav-buttons {
+        bottom: -48px;
+      }
+    }
+
+    /* MƯA TRÁI TIM KHI XEM ALBUM */
+    .heart-rain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 15;
+    }
+
+    .heart-rain span {
+      position: absolute;
+      top: -10%;
+      font-size: 1.2rem;
+      opacity: 0.85;
+      animation: heart-fall linear infinite;
+    }
+
+    @keyframes heart-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translateY(115vh) rotate(360deg);
+        opacity: 0.4;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MÀN HÌNH KHÓA BÀN PHÍM SỐ -->
+  <div class="password-screen" id="lockScreen">
+    <!-- Đổi file ảnh avatar của bạn gái tại thẻ img dưới đây -->
+    <div class="avatar-box">
+      <img src="style/avatar.jpg" alt="Công chúa">
+    </div>
+    <div class="heart-dot">♥</div>
+    <div class="pass-title">Nhập mật khẩu</div>
+
+    <!-- 4 dấu chấm tròn -->
+    <div class="dots-container" id="dotsContainer">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bàn phím số giao diện iPhone -->
+    <div class="keypad">
+      <div class="key" onclick="pressKey('1')">1</div>
+      <div class="key" onclick="pressKey('2')">2</div>
+      <div class="key" onclick="pressKey('3')">3</div>
+      <div class="key" onclick="pressKey('4')">4</div>
+      <div class="key" onclick="pressKey('5')">5</div>
+      <div class="key" onclick="pressKey('6')">6</div>
+      <div class="key" onclick="pressKey('7')">7</div>
+      <div class="key" onclick="pressKey('8')">8</div>
+      <div class="key" onclick="pressKey('9')">9</div>
+      <div class="key blank"></div>
+      <div class="key" onclick="pressKey('0')">0</div>
+      <div class="key" onclick="pressDelete()">⌫</div>
+    </div>
+  </div>
+
+  <!-- NHẠC NỀN -->
+  <audio id="bgMusic" src="style/nhac.mp3" loop></audio>
+
+  <!-- KHUNG LÁ THƯ TAY LẬT TRANG -->
+  <div class="letter-stack" id="letterContent">
+    <div class="letter-paper layer1"></div>
+    <div class="letter-paper layer2"></div>
+    <div class="letter-paper main-letter">
+      <h1 id="textLetter"></h1>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" onclick="changePage(-1)" disabled>◀</button>
+        <button class="nav-btn" id="nextBtn" onclick="changePage(1)">▶</button>
+      </div>
+      <div class="cute-bear">🐻💐</div>
+      <div class="page-number" id="pageNav">1/8</div>
+    </div>
+  </div>
+
+  <!-- OVERLAY TỐI TOÀN MÀN HÌNH -->
+  <div class="end-overlay" id="endOverlay">
+    <button class="album-btn" onclick="openAlbum()">Xem album ảnh 📷</button>
+  </div>
+
+  <!-- MƯA TRÁI TIM -->
+  <div class="heart-rain" id="heartRain"></div>
+
+  <!-- ALBUM ẢNH - SỔ LẬT 3D, MỞ 2 TRANG SONG SONG -->
+  <div class="album-wrap" id="albumContent">
+    <div class="album-base">
+      <div class="album-base-half left" id="albumLeftBase"></div>
+      <div class="album-base-half right" id="albumRightBase"></div>
+    </div>
+    <div id="albumPagesContainer"></div>
+    <div class="album-spine" id="albumSpine"></div>
+    <div class="album-cover" id="albumCover">
+      <div class="album-cover-face front" onclick="openCover()">
+        <div class="album-cover-title">Love Story</div>
+        <div class="album-cover-subtitle">in the moment</div>
+        <div class="album-cover-hint">chạm để mở</div>
+      </div>
+      <div class="album-cover-face back"></div>
+    </div>
+    <div class="album-nav-buttons">
+      <button class="nav-btn" id="albumPrevBtn" onclick="changeAlbumPage(-1)" disabled>◀</button>
+      <button class="nav-btn" id="albumNextBtn" onclick="changeAlbumPage(1)">▶</button>
+    </div>
+  </div>
+
+  <script>
+    // THAY ĐỔI MẬT KHẨU 4 SỐ TẠI ĐÂY (Ví dụ: năm sinh, ngày kỷ niệm)
+    const REAL_PASSWORD = "2505";
+
+    // NỘI DUNG 8 TRANG THƯ TAY (Thay đổi chữ tùy ý bạn)
+    const pagesData = [
+      "Gửi vợ \nbình yên và là duy nhất của lòng chồng! 🕊️",
+      "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
+      "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
+      "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà ck vẫn động lòng với vợ! ✨",
+      "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
+      "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao em sẽ là mãi mãi! ♾️",
+      "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
+      "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
+    ];
+
+    let inputPass = "";
+    let currentPage = 0;
+    let typingTimeout;
+
+    // XỬ LÝ KHI BẤM PHÍM SỐ
+    function pressKey(num) {
+      if (inputPass.length < 4) {
+        inputPass += num;
+        updateDots();
+
+        // Khi đã gõ đủ 4 số, tự động kiểm tra ngay
+        if (inputPass.length === 4) {
+          setTimeout(checkPassword, 200);
+        }
+      }
+    }
+
+    // XỬ LÝ BẤM NÚT XÓA SỐ (DELETE)
+    function pressDelete() {
+      if (inputPass.length > 0) {
+        inputPass = inputPass.slice(0, -1);
+        updateDots();
+      }
+    }
+
+    // CẬP NHẬT ĐÈN TRÒN HIỂN THỊ
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        if (index < inputPass.length) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    // KIỂM TRA MẬT KHẨU
+    function checkPassword() {
+      const lockScreen = document.getElementById('lockScreen');
+      const letter = document.getElementById('letterContent');
+
+      if (inputPass === REAL_PASSWORD) {
+        document.getElementById('bgMusic').play();
+        lockScreen.style.opacity = '0';
+        setTimeout(() => {
+          lockScreen.style.display = 'none';
+          letter.style.opacity = '1';
+          letter.style.transform = 'scale(1)';
+          startTypingPage(0);
+        }, 500);
+      } else {
+        // Nhập sai: Làm hiệu ứng rung màn hình khóa và xóa hết số cũ
+        lockScreen.classList.add('shake');
+        setTimeout(() => {
+          lockScreen.classList.remove('shake');
+          inputPass = "";
+          updateDots();
+        }, 300);
+      }
+    }
+
+    // HÀM GÕ CHỮ TỰ ĐỘNG
+    function startTypingPage(pageIndex) {
+      clearTimeout(typingTimeout);
+      const textElement = document.getElementById("textLetter");
+      const nextBtn = document.getElementById("nextBtn");
+      textElement.innerHTML = "";
+      let text = pagesData[pageIndex];
+      let index = 0;
+      document.getElementById("prevBtn").disabled = pageIndex === 0;
+      document.getElementById("endOverlay").classList.remove("show");
+      nextBtn.disabled = true;
+      function type() {
+        if (index < text.length) {
+          textElement.innerHTML += text.charAt(index);
+          index++;
+          typingTimeout = setTimeout(type, 60);
+        } else if (pageIndex === pagesData.length - 1) {
+          setTimeout(() => {
+            document.getElementById("endOverlay").classList.add("show");
+          }, 3000);
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+      type();
+      document.getElementById("pageNav").innerText = `${pageIndex + 1}/8`;
+    }
+
+    // CHUYỂN TRANG BẰNG NÚT BẤM
+    function changePage(direction) {
+      currentPage += direction;
+      if (currentPage < 0) currentPage = 0;
+      if (currentPage >= pagesData.length) currentPage = pagesData.length - 1;
+      startTypingPage(currentPage);
+    }
+
+    // DANH SÁCH TÊN FILE ẢNH TRONG THƯ MỤC style/img
+    // Thêm/bớt ảnh: chỉ cần sửa mảng tên file này
+    const albumFiles = [
+      "20240706_003640.jpg",
+      "IMG_20240826_063904.jpg",
+      "20241101_081844.jpg",
+      "20241101_081910.jpg",
+      "20241102_090120.jpg",
+      "20241102_100111.jpg",
+      "20241102_101636.jpg",
+      "20241102_102709.jpg",
+      "IMG_20241103_222541.jpg",
+      "IMG_20241103_222604.jpg",
+      "IMG_20241103_222628.jpg",
+      "_MG_1295.JPG",
+      "20250417_122120.jpg",
+      "20250417_122122.jpg",
+      "20250417_205550.jpg",
+      "20250417_205829.jpg",
+      "20250418_071327.jpg",
+      "20250418_071412.jpg",
+      "20250418_071509.jpg",
+      "20250418_071525.jpg",
+      "20250418_071628.jpg",
+      "20250418_074655.jpg",
+      "20250418_081039.jpg",
+      "20250418_081432.jpg",
+      "20250418_081622.jpg",
+      "20250418_093051.jpg",
+      "20250419_194553.jpg",
+      "IMG_20250428_071351.jpg",
+      "IMG_20250525_200324.jpg",
+      "20260122_114205.jpg",
+      "20260122_114335.jpg",
+      "20260122_114338.jpg",
+      "20260122_114353.jpg",
+      "20260122_114811.jpg",
+      "20260122_114945.jpg",
+      "20260122_114948.jpg",
+      "20260122_115014.jpg",
+      "20260122_153410.jpg",
+      "20260122_153845.jpg",
+      "B612_20260122_154213_878.jpg",
+      "20260122_154632.jpg",
+      "anh1.jpg"
+    ];
+
+    // Điền chú thích cho từng ảnh tại đây nếu muốn (để trống "" nếu không cần)
+    // Số phần tử phải khớp albumFiles, thiếu sẽ tự để trống
+    const albumCaptions = [];
+
+    const albumData = albumFiles.map((file, i) => ({
+      src: `style/img/${file}`,
+      caption: albumCaptions[i] || ""
+    }));
+
+    let currentAlbumPage = 0; // số trang đã lật (0 = chưa lật trang nào)
+    let albumPageEls = [];
+
+    // ẢNH 1 LÀM NỀN TRÁI CỐ ĐỊNH SAU BÌA. TỪ ẢNH 2 TRỞ ĐI GHÉP THÀNH CÁC TỜ LẬT (leaf):
+    // leaf i: mặt trước = ảnh (2 + i*2) hiện ở phải, mặt sau = ảnh (3 + i*2) sẽ thành trái sau khi lật
+    function buildAlbumPages() {
+      const container = document.getElementById('albumPagesContainer');
+      container.innerHTML = '';
+      albumPageEls = [];
+      const rest = albumData.slice(1); // ảnh từ thứ 2 trở đi
+      const leafCount = Math.ceil(rest.length / 2);
+
+      for (let i = 0; i < leafCount; i++) {
+        const frontPhoto = rest[i * 2];
+        const backPhoto = rest[i * 2 + 1];
+
+        const pageEl = document.createElement('div');
+        pageEl.className = 'album-page';
+        pageEl.style.zIndex = leafCount - i;
+
+        pageEl.appendChild(buildPageFace(frontPhoto, i * 2 + 2, false));
+        if (backPhoto) {
+          pageEl.appendChild(buildPageFace(backPhoto, i * 2 + 3, true));
+        }
+
+        container.appendChild(pageEl);
+        albumPageEls.push(pageEl);
+      }
+
+      // Nền trái cố định = ảnh 1 (luôn nằm dưới cùng, lộ ra khi mọi trang đã lật hết)
+      // Nền phải cố định = ảnh cuối cùng (lộ ra khi mọi trang đã lật hết)
+      document.getElementById('albumLeftBase').innerHTML = '';
+      document.getElementById('albumLeftBase').appendChild(buildPageFace(albumData[0], 1, true));
+      document.getElementById('albumRightBase').innerHTML = '';
+      if (rest.length) {
+        document.getElementById('albumRightBase').appendChild(buildPageFace(rest[rest.length - 1], albumData.length, false));
+      }
+    }
+
+    function buildPageFace(photo, pageNumber, isBack) {
+      const face = document.createElement('div');
+      face.className = 'album-page-face' + (isBack ? ' back' : ' front');
+
+      const photoBox = document.createElement('div');
+      photoBox.className = 'album-photo';
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = 'Kỷ niệm';
+      photoBox.appendChild(img);
+
+      const caption = document.createElement('div');
+      caption.className = 'album-caption';
+      caption.innerText = photo.caption;
+
+      const pageNum = document.createElement('div');
+      pageNum.className = 'album-page-number';
+      pageNum.innerText = `${pageNumber}/${albumData.length}`;
+
+      face.appendChild(photoBox);
+      face.appendChild(caption);
+      face.appendChild(pageNum);
+      return face;
+    }
+
+    // MỞ ALBUM ẢNH (hiện khung album, còn đóng bìa)
+    function openAlbum() {
+      document.getElementById('endOverlay').classList.remove('show');
+      const letter = document.getElementById('letterContent');
+      const album = document.getElementById('albumContent');
+      letter.style.opacity = '0';
+      letter.style.transform = 'scale(0.8)';
+      setTimeout(() => {
+        letter.style.display = 'none';
+        buildAlbumPages();
+        currentAlbumPage = 0;
+        updateAlbumNavButtons();
+        document.getElementById('albumCover').classList.remove('flipped');
+        album.classList.remove('cover-open');
+        album.style.display = 'block';
+        requestAnimationFrame(() => {
+          album.style.opacity = '1';
+          album.style.transform = 'scale(1)';
+        });
+        startHeartRain();
+      }, 500);
+    }
+
+    // MƯA TRÁI TIM
+    let heartRainInterval;
+    function startHeartRain() {
+      const container = document.getElementById('heartRain');
+      container.innerHTML = '';
+      const hearts = ['❤️', '💕', '💖', '💗'];
+      function spawnHeart() {
+        const heart = document.createElement('span');
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+        const duration = 4 + Math.random() * 4;
+        heart.style.animationDuration = duration + 's';
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), duration * 1000);
+      }
+      clearInterval(heartRainInterval);
+      heartRainInterval = setInterval(spawnHeart, 250);
+    }
+
+    function stopHeartRain() {
+      clearInterval(heartRainInterval);
+      document.getElementById('heartRain').innerHTML = '';
+    }
+
+    // MỞ BÌA ALBUM
+    function openCover() {
+      document.getElementById('albumCover').classList.add('flipped');
+      document.getElementById('albumContent').classList.add('cover-open');
+    }
+
+    // LẬT TRANG SỔ ẢNH (direction: 1 = lật tới, -1 = lật lùi)
+    function changeAlbumPage(direction) {
+      if (direction === 1 && currentAlbumPage < albumPageEls.length) {
+        albumPageEls[currentAlbumPage].classList.add('flipped');
+        currentAlbumPage++;
+      } else if (direction === -1 && currentAlbumPage > 0) {
+        currentAlbumPage--;
+        albumPageEls[currentAlbumPage].classList.remove('flipped');
+      }
+      updateAlbumNavButtons();
+    }
+
+    function updateAlbumNavButtons() {
+      document.getElementById('albumPrevBtn').disabled = currentAlbumPage === 0;
+      document.getElementById('albumNextBtn').disabled = currentAlbumPage === albumPageEls.length;
+    }
+  </script>
+</body>
+
+</html>
