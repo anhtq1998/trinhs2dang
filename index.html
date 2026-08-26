@@ -465,6 +465,13 @@
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
+    .album-back-cover-title {
+      font-size: 1.6rem;
+      line-height: 1.5;
+      text-align: center;
+      padding: 0 20px;
+    }
+
     .album-cover-subtitle {
       font-family: Georgia, 'Times New Roman', serif;
       font-style: italic;
@@ -506,6 +513,10 @@
 
       .album-cover-title {
         font-size: 1.7rem;
+      }
+
+      .album-back-cover-title {
+        font-size: 1.2rem;
       }
 
       .album-nav-buttons {
@@ -625,9 +636,9 @@
       "Gửi vợ \nbình yên và là duy nhất của lòng chồng! 🕊️",
       "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
       "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
-      "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà ck vẫn động lòng với vợ! ✨",
+      "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà chồng vẫn động lòng với vợ! ✨",
       "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
-      "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao em sẽ là mãi mãi! ♾️",
+      "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao vợ sẽ là mãi mãi! ♾️",
       "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
       "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
     ];
@@ -744,7 +755,7 @@
       "IMG_20241103_222541.jpg",
       "IMG_20241103_222604.jpg",
       "IMG_20241103_222628.jpg",
-      "_MG_1295.JPG",
+      "cobecuaanh.jpg",
       "20250417_122120.jpg",
       "20250417_122122.jpg",
       "20250417_205550.jpg",
@@ -818,6 +829,25 @@
         container.appendChild(pageEl);
         albumPageEls.push(pageEl);
       }
+
+      const backCoverEl = document.createElement('div');
+      backCoverEl.className = 'album-page';
+      backCoverEl.style.zIndex = 0;
+      backCoverEl.appendChild(buildBackCoverFace());
+      container.appendChild(backCoverEl);
+      albumPageEls.push(backCoverEl);
+    }
+
+    function buildBackCoverFace() {
+      const face = document.createElement('div');
+      face.className = 'album-page-face front album-cover-face';
+
+      const title = document.createElement('div');
+      title.className = 'album-cover-title album-back-cover-title';
+      title.innerText = "Thank you for everything you've brought into my life";
+
+      face.appendChild(title);
+      return face;
     }
 
     function buildCoverFace() {
@@ -831,11 +861,11 @@
 
       const subtitle = document.createElement('div');
       subtitle.className = 'album-cover-subtitle';
-      subtitle.innerText = 'in the moment';
+      subtitle.innerText = 'A lifetime of love';
 
       const hint = document.createElement('div');
       hint.className = 'album-cover-hint';
-      hint.innerText = 'chạm để mở';
+      hint.innerText = '';
 
       face.appendChild(title);
       face.appendChild(subtitle);
@@ -919,7 +949,13 @@
       if (direction === 1 && currentAlbumPage < albumPageEls.length) {
         albumPageEls[currentAlbumPage].classList.add('flipped');
         currentAlbumPage++;
+        if (currentAlbumPage === albumPageEls.length) {
+          stopHeartRain();
+        }
       } else if (direction === -1 && currentAlbumPage > 0) {
+        if (currentAlbumPage === albumPageEls.length) {
+          startHeartRain();
+        }
         currentAlbumPage--;
         albumPageEls[currentAlbumPage].classList.remove('flipped');
       }
