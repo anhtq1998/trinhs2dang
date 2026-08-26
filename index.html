@@ -355,12 +355,12 @@
       transform: scale(1.05);
     }
 
-    /* ALBUM ẢNH - SỔ LẬT 3D, MỞ 2 TRANG SONG SONG */
+    /* ALBUM ẢNH - LẬT TỪNG TRANG 1, FULL KHUNG, KHÔNG CẮT ẢNH */
     .album-wrap {
       position: relative;
       width: 92%;
-      max-width: 900px;
-      aspect-ratio: 16/10;
+      max-width: 420px;
+      aspect-ratio: 3/4;
       opacity: 0;
       transform: scale(0.85);
       transition: all 0.8s ease;
@@ -371,43 +371,15 @@
     .album-base {
       position: absolute;
       inset: 0;
-      display: flex;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
-    }
-
-    .album-base-half {
-      position: relative;
-      width: 50%;
-      height: 100%;
       background: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 25px 20px;
-    }
-
-    .album-base::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 12px;
-      margin-left: -6px;
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.12));
-      pointer-events: none;
-      z-index: 25;
     }
 
     .album-page {
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 50%;
-      height: 100%;
+      inset: 0;
       transform-style: preserve-3d;
       transform-origin: left center;
       transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
@@ -423,20 +395,17 @@
       inset: 0;
       backface-visibility: hidden;
       background: #fff;
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 25px 20px;
-    }
-
-    .album-page-face.front {
-      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.08) inset;
+      overflow: hidden;
     }
 
     .album-page-face.back {
       transform: rotateY(180deg);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08) inset;
     }
 
     .album-photo {
@@ -471,63 +440,21 @@
     .album-page-number {
       position: absolute;
       bottom: 10px;
+      right: 18px;
       font-family: sans-serif;
       font-size: 0.8rem;
       color: #b5b5b5;
       letter-spacing: 1px;
     }
 
-    .album-base-half.left .album-page-number,
-    .album-page-face.back .album-page-number {
-      left: 18px;
-    }
-
-    .album-base-half.right .album-page-number,
-    .album-page-face.front .album-page-number {
-      right: 18px;
-    }
-
-    /* BÌA ALBUM - PHONG CÁCH CŨ, DA KEM (phủ toàn bộ khung lúc đóng) */
-    .album-cover {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      transform-origin: left center;
-      transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
-      z-index: 50;
-      border-radius: 10px;
-    }
-
-    .album-cover.flipped {
-      transform: rotateY(-170deg);
-    }
-
+    /* BÌA ALBUM - LẬT GIỐNG CÁC TRANG KHÁC */
     .album-cover-face {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       background:
         radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.5), transparent 60%),
         radial-gradient(ellipse at 80% 90%, rgba(120, 90, 60, 0.12), transparent 55%),
         linear-gradient(135deg, #ede4d3 0%, #e3d8c3 50%, #ddcfb6 100%);
       box-shadow: 0 0 0 1px rgba(120, 100, 70, 0.15) inset, 0 0 25px rgba(90, 70, 40, 0.15) inset;
-    }
-
-    .album-cover-face.front {
       cursor: pointer;
-    }
-
-    .album-cover-face.back {
-      transform: rotateY(180deg);
-      background:
-        radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.4), transparent 55%),
-        linear-gradient(135deg, #f1e9db 0%, #e8ddc9 100%);
     }
 
     .album-cover-title {
@@ -556,30 +483,6 @@
       letter-spacing: 0.5px;
     }
 
-    .album-cover.flipped {
-      pointer-events: none;
-      visibility: hidden;
-      transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 1s;
-    }
-
-    .album-spine {
-      position: absolute;
-      left: 50%;
-      top: 3%;
-      bottom: 3%;
-      width: 14px;
-      margin-left: -7px;
-      background: linear-gradient(90deg, #d8cbb0, #c9baa0 50%, #d8cbb0);
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-      z-index: 60;
-      border-radius: 2px;
-      display: none;
-    }
-
-    .album-wrap.cover-open .album-spine {
-      display: block;
-    }
-
     .album-nav-buttons {
       position: absolute;
       bottom: -55px;
@@ -593,8 +496,8 @@
     @media (max-width: 480px) {
       .album-wrap {
         width: 94%;
-        max-width: 420px;
-        aspect-ratio: 4/5;
+        max-width: 360px;
+        aspect-ratio: 3/4;
       }
 
       .album-caption {
@@ -703,22 +606,10 @@
   <!-- MƯA TRÁI TIM -->
   <div class="heart-rain" id="heartRain"></div>
 
-  <!-- ALBUM ẢNH - SỔ LẬT 3D, MỞ 2 TRANG SONG SONG -->
+  <!-- ALBUM ẢNH - LẬT TỪNG TRANG 1, FULL KHUNG -->
   <div class="album-wrap" id="albumContent">
-    <div class="album-base">
-      <div class="album-base-half left" id="albumLeftBase"></div>
-      <div class="album-base-half right" id="albumRightBase"></div>
-    </div>
+    <div class="album-base"></div>
     <div id="albumPagesContainer"></div>
-    <div class="album-spine" id="albumSpine"></div>
-    <div class="album-cover" id="albumCover">
-      <div class="album-cover-face front" onclick="openCover()">
-        <div class="album-cover-title">Love Story</div>
-        <div class="album-cover-subtitle">in the moment</div>
-        <div class="album-cover-hint">chạm để mở</div>
-      </div>
-      <div class="album-cover-face back"></div>
-    </div>
     <div class="album-nav-buttons">
       <button class="nav-btn" id="albumPrevBtn" onclick="changeAlbumPage(-1)" disabled>◀</button>
       <button class="nav-btn" id="albumNextBtn" onclick="changeAlbumPage(1)">▶</button>
@@ -895,43 +786,61 @@
       caption: albumCaptions[i] || ""
     }));
 
-    let currentAlbumPage = 0; // số trang đã lật (0 = chưa lật trang nào)
+    let currentAlbumPage = 0; // số trang đã lật (0 = đang ở bìa)
     let albumPageEls = [];
 
-    // ẢNH 1 LÀM NỀN TRÁI CỐ ĐỊNH SAU BÌA. TỪ ẢNH 2 TRỞ ĐI GHÉP THÀNH CÁC TỜ LẬT (leaf):
-    // leaf i: mặt trước = ảnh (2 + i*2) hiện ở phải, mặt sau = ảnh (3 + i*2) sẽ thành trái sau khi lật
+    // MỖI LEAF LÀ 1 TỜ LẬT: mặt trước hiện khi chưa lật, mặt sau hiện khi lật xong.
+    // Leaf 0 = bìa (mặt trước: tiêu đề, mặt sau: ảnh 1). Từ leaf 1 trở đi: mặt trước = ảnh lẻ, mặt sau = ảnh chẵn kế tiếp.
     function buildAlbumPages() {
       const container = document.getElementById('albumPagesContainer');
       container.innerHTML = '';
       albumPageEls = [];
-      const rest = albumData.slice(1); // ảnh từ thứ 2 trở đi
-      const leafCount = Math.ceil(rest.length / 2);
+
+      const leafCount = 1 + Math.ceil(albumData.length / 2);
 
       for (let i = 0; i < leafCount; i++) {
-        const frontPhoto = rest[i * 2];
-        const backPhoto = rest[i * 2 + 1];
-
         const pageEl = document.createElement('div');
         pageEl.className = 'album-page';
         pageEl.style.zIndex = leafCount - i;
 
-        pageEl.appendChild(buildPageFace(frontPhoto, i * 2 + 2, false));
-        if (backPhoto) {
-          pageEl.appendChild(buildPageFace(backPhoto, i * 2 + 3, true));
+        if (i === 0) {
+          pageEl.appendChild(buildCoverFace());
+          pageEl.appendChild(buildPageFace(albumData[0], 1, true));
+        } else {
+          const frontPhoto = albumData[i * 2 - 1];
+          const backPhoto = albumData[i * 2];
+          pageEl.appendChild(buildPageFace(frontPhoto, i * 2, false));
+          if (backPhoto) {
+            pageEl.appendChild(buildPageFace(backPhoto, i * 2 + 1, true));
+          }
         }
 
         container.appendChild(pageEl);
         albumPageEls.push(pageEl);
       }
+    }
 
-      // Nền trái cố định = ảnh 1 (luôn nằm dưới cùng, lộ ra khi mọi trang đã lật hết)
-      // Nền phải cố định = ảnh cuối cùng (lộ ra khi mọi trang đã lật hết)
-      document.getElementById('albumLeftBase').innerHTML = '';
-      document.getElementById('albumLeftBase').appendChild(buildPageFace(albumData[0], 1, true));
-      document.getElementById('albumRightBase').innerHTML = '';
-      if (rest.length) {
-        document.getElementById('albumRightBase').appendChild(buildPageFace(rest[rest.length - 1], albumData.length, false));
-      }
+    function buildCoverFace() {
+      const face = document.createElement('div');
+      face.className = 'album-page-face front album-cover-face';
+      face.onclick = () => changeAlbumPage(1);
+
+      const title = document.createElement('div');
+      title.className = 'album-cover-title';
+      title.innerText = 'Love Story';
+
+      const subtitle = document.createElement('div');
+      subtitle.className = 'album-cover-subtitle';
+      subtitle.innerText = 'in the moment';
+
+      const hint = document.createElement('div');
+      hint.className = 'album-cover-hint';
+      hint.innerText = 'chạm để mở';
+
+      face.appendChild(title);
+      face.appendChild(subtitle);
+      face.appendChild(hint);
+      return face;
     }
 
     function buildPageFace(photo, pageNumber, isBack) {
@@ -971,8 +880,6 @@
         buildAlbumPages();
         currentAlbumPage = 0;
         updateAlbumNavButtons();
-        document.getElementById('albumCover').classList.remove('flipped');
-        album.classList.remove('cover-open');
         album.style.display = 'block';
         requestAnimationFrame(() => {
           album.style.opacity = '1';
@@ -1005,12 +912,6 @@
     function stopHeartRain() {
       clearInterval(heartRainInterval);
       document.getElementById('heartRain').innerHTML = '';
-    }
-
-    // MỞ BÌA ALBUM
-    function openCover() {
-      document.getElementById('albumCover').classList.add('flipped');
-      document.getElementById('albumContent').classList.add('cover-open');
     }
 
     // LẬT TRANG SỔ ẢNH (direction: 1 = lật tới, -1 = lật lùi)
