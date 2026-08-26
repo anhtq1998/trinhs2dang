@@ -813,6 +813,7 @@
         const pageEl = document.createElement('div');
         pageEl.className = 'album-page';
         pageEl.style.zIndex = leafCount - i;
+        pageEl.dataset.zIndex = leafCount - i;
 
         if (i === 0) {
           pageEl.appendChild(buildCoverFace());
@@ -823,20 +824,14 @@
           pageEl.appendChild(buildPageFace(frontPhoto, i * 2, false));
           if (backPhoto) {
             pageEl.appendChild(buildPageFace(backPhoto, i * 2 + 1, true));
+          } else {
+            pageEl.appendChild(buildBackCoverFace());
           }
         }
 
         container.appendChild(pageEl);
         albumPageEls.push(pageEl);
       }
-
-      const backCoverEl = document.createElement('div');
-      backCoverEl.className = 'album-page';
-      backCoverEl.style.zIndex = 0;
-      backCoverEl.appendChild(buildBlankFace());
-      backCoverEl.appendChild(buildBackCoverFace());
-      container.appendChild(backCoverEl);
-      albumPageEls.push(backCoverEl);
     }
 
     function buildBackCoverFace() {
@@ -848,12 +843,6 @@
       title.innerText = "Thank you for everything you've brought into my life";
 
       face.appendChild(title);
-      return face;
-    }
-
-    function buildBlankFace() {
-      const face = document.createElement('div');
-      face.className = 'album-page-face front';
       return face;
     }
 
@@ -954,7 +943,9 @@
     // LẬT TRANG SỔ ẢNH (direction: 1 = lật tới, -1 = lật lùi)
     function changeAlbumPage(direction) {
       if (direction === 1 && currentAlbumPage < albumPageEls.length) {
-        albumPageEls[currentAlbumPage].classList.add('flipped');
+        const pageEl = albumPageEls[currentAlbumPage];
+        pageEl.classList.add('flipped');
+        pageEl.style.zIndex = -pageEl.dataset.zIndex;
         currentAlbumPage++;
         if (currentAlbumPage === albumPageEls.length) {
           stopHeartRain();
@@ -964,7 +955,9 @@
           startHeartRain();
         }
         currentAlbumPage--;
-        albumPageEls[currentAlbumPage].classList.remove('flipped');
+        const pageEl = albumPageEls[currentAlbumPage];
+        pageEl.classList.remove('flipped');
+        pageEl.style.zIndex = pageEl.dataset.zIndex;
       }
       updateAlbumNavButtons();
     }
