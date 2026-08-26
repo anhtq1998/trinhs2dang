@@ -833,6 +833,7 @@
       const backCoverEl = document.createElement('div');
       backCoverEl.className = 'album-page';
       backCoverEl.style.zIndex = 0;
+      backCoverEl.appendChild(buildBlankFace());
       backCoverEl.appendChild(buildBackCoverFace());
       container.appendChild(backCoverEl);
       albumPageEls.push(backCoverEl);
@@ -840,13 +841,19 @@
 
     function buildBackCoverFace() {
       const face = document.createElement('div');
-      face.className = 'album-page-face front album-cover-face';
+      face.className = 'album-page-face back album-cover-face';
 
       const title = document.createElement('div');
       title.className = 'album-cover-title album-back-cover-title';
       title.innerText = "Thank you for everything you've brought into my life";
 
       face.appendChild(title);
+      return face;
+    }
+
+    function buildBlankFace() {
+      const face = document.createElement('div');
+      face.className = 'album-page-face front';
       return face;
     }
 
