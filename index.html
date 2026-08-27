@@ -235,7 +235,7 @@
       transform: translateX(-50%);
       display: flex;
       gap: 40px;
-      z-index: 4;
+      z-index: 2147483647;
     }
 
     .nav-btn {
@@ -246,6 +246,11 @@
       color: #cd5c5c;
       transition: transform 0.2s ease;
       user-select: none;
+    }
+
+    #nextBtn {
+      position: relative;
+      z-index: 2147483647 !important;
     }
 
     .nav-btn:hover {
@@ -634,13 +639,13 @@
     // NỘI DUNG 8 TRANG THƯ TAY (Thay đổi chữ tùy ý bạn)
     const pagesData = [
       "Gửi vợ \nbình yên và là duy nhất của lòng chồng! 🕊️",
-      // "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
-      // "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
-      // "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà chồng vẫn động lòng với vợ! ✨",
-      // "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
-      // "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao vợ sẽ là mãi mãi! ♾️",
-      // "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
-      // "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
+      "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
+      "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
+      "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà chồng vẫn động lòng với vợ! ✨",
+      "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
+      "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao vợ sẽ là mãi mãi! ♾️",
+      "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
+      "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
     ];
 
     let inputPass = "";
