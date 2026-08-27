@@ -628,6 +628,14 @@
   </div>
 
   <script>
+    // DEBUG TẠM: hiện lỗi JS ra màn hình để xác định nguyên nhân reload (xóa khối này sau khi debug xong)
+    window.onerror = function (message, source, lineno, colno, error) {
+      const box = document.createElement('div');
+      box.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#000;color:#0f0;font-family:monospace;font-size:14px;padding:16px;overflow:auto;white-space:pre-wrap;';
+      box.textContent = 'JS ERROR:\n' + message + '\nfile: ' + source + '\nline: ' + lineno + ':' + colno + '\n\n' + (error && error.stack ? error.stack : '');
+      document.body.appendChild(box);
+    };
+
     // THAY ĐỔI MẬT KHẨU 4 SỐ TẠI ĐÂY (Ví dụ: năm sinh, ngày kỷ niệm)
     const REAL_PASSWORD = "2505";
 
