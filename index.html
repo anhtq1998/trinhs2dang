@@ -802,6 +802,16 @@
       caption: albumCaptions[i] || ""
     }));
 
+    // TẢI NGẦM SẴN 42 ẢNH TỪ LÚC MỞ TRANG (khi đang ở lockscreen/đọc thư)
+    // để lúc bấm "Xem album" ảnh đã nằm trong cache trình duyệt, không bị giật/lag.
+    function preloadAlbumImages() {
+      albumData.forEach((photo) => {
+        const img = new Image();
+        img.src = photo.src;
+      });
+    }
+    preloadAlbumImages();
+
     let currentAlbumPage = 0; // số trang đã lật (0 = đang ở bìa)
     let albumPageEls = [];
 
