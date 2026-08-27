@@ -634,13 +634,13 @@
     // NỘI DUNG 8 TRANG THƯ TAY (Thay đổi chữ tùy ý bạn)
     const pagesData = [
       "Gửi vợ \nbình yên và là duy nhất của lòng chồng! 🕊️",
-      "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
-      "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
-      "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà chồng vẫn động lòng với vợ! ✨",
-      "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
-      "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao vợ sẽ là mãi mãi! ♾️",
-      "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
-      "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
+      // "Chồng không bao giờ quên ngày mình gặp nhau...\nChồng thật may mắn vì đã tìm thấy vợ! ⏳",
+      // "Vợ đã đến và sưởi ấm trái tim chồng,\nbằng sự dịu dàng và sự quan tâm của vợ🌸",
+      // "Chồng cũng không nghĩ rằng,\ndù xa nhau như thế mà chồng vẫn động lòng với vợ! ✨",
+      // "Vợ đã thay đổi cuộc sống của chồng,\nhướng chồng tới những điều tốt đẹp nhất trong cuộc sống. 💕",
+      // "Lời yêu này có thể không viết hết thành trang,\nnhưng tình cảm chồng trao vợ sẽ là mãi mãi! ♾️",
+      // "Những kỉ niệm...\nnhững ngọt ngào và những yêu thương,\nchồng sẽ luôn trân trọng và giữ gìn! 🌹",
+      // "Trang cuối cùng rồi...\nchồng thúi mong vợ sẽ nhớ tới chồng tới khi già nha ❤️"
     ];
 
     let inputPass = "";
@@ -879,8 +879,7 @@
       const photoBox = document.createElement('div');
       photoBox.className = 'album-photo';
       const img = document.createElement('img');
-      img.dataset.src = photo.src;
-      img.loading = 'lazy';
+      img.src = photo.src;
       img.alt = 'Kỷ niệm';
       photoBox.appendChild(img);
 
@@ -909,7 +908,6 @@
         letter.style.display = 'none';
         buildAlbumPages();
         currentAlbumPage = 0;
-        loadNearbyAlbumImages();
         updateAlbumNavButtons();
         album.style.display = 'block';
         requestAnimationFrame(() => {
@@ -964,21 +962,7 @@
         pageEl.classList.remove('flipped');
         pageEl.style.zIndex = pageEl.dataset.zIndex;
       }
-      loadNearbyAlbumImages();
       updateAlbumNavButtons();
-    }
-
-    // CHỈ GÁN SRC THẬT CHO ẢNH GẦN TRANG ĐANG XEM ĐỂ TRÁNH TẢI 40+ ẢNH FULL-SIZE CÙNG LÚC (GÂY CRASH TRÊN MOBILE)
-    function loadNearbyAlbumImages() {
-      const RADIUS = 3;
-      const from = Math.max(0, currentAlbumPage - RADIUS);
-      const to = Math.min(albumPageEls.length - 1, currentAlbumPage + RADIUS);
-      for (let i = from; i <= to; i++) {
-        albumPageEls[i].querySelectorAll('img[data-src]').forEach((img) => {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        });
-      }
     }
 
     function updateAlbumNavButtons() {
