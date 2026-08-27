@@ -807,7 +807,7 @@
       container.innerHTML = '';
       albumPageEls = [];
 
-      const leafCount = 1 + Math.ceil(albumData.length / 2);
+      const leafCount = 1 + albumData.length;
 
       for (let i = 0; i < leafCount; i++) {
         const pageEl = document.createElement('div');
@@ -817,13 +817,12 @@
 
         if (i === 0) {
           pageEl.appendChild(buildCoverFace());
-          pageEl.appendChild(buildPageFace(albumData[0], 1, true));
+          pageEl.appendChild(buildBlankFace());
         } else {
-          const frontPhoto = albumData[i * 2 - 1];
-          const backPhoto = albumData[i * 2];
-          pageEl.appendChild(buildPageFace(frontPhoto, i * 2, false));
-          if (backPhoto) {
-            pageEl.appendChild(buildPageFace(backPhoto, i * 2 + 1, true));
+          const photo = albumData[i - 1];
+          pageEl.appendChild(buildPageFace(photo, i, false));
+          if (i < leafCount - 1) {
+            pageEl.appendChild(buildBlankFace());
           } else {
             pageEl.appendChild(buildBackCoverFace());
           }
@@ -832,6 +831,12 @@
         container.appendChild(pageEl);
         albumPageEls.push(pageEl);
       }
+    }
+
+    function buildBlankFace() {
+      const face = document.createElement('div');
+      face.className = 'album-page-face back';
+      return face;
     }
 
     function buildBackCoverFace() {
