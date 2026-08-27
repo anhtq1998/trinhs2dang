@@ -807,8 +807,7 @@
       container.innerHTML = '';
       albumPageEls = [];
 
-      const leafCount = 1 + albumData.length;
-
+      const leafCount = 2 + albumData.length;
       for (let i = 0; i < leafCount; i++) {
         const pageEl = document.createElement('div');
         pageEl.className = 'album-page';
@@ -818,14 +817,13 @@
         if (i === 0) {
           pageEl.appendChild(buildCoverFace());
           pageEl.appendChild(buildBlankFace());
+        } else if (i === leafCount - 1) {
+          pageEl.appendChild(buildBackCoverFace());
+          pageEl.appendChild(buildBlankFace());
         } else {
           const photo = albumData[i - 1];
           pageEl.appendChild(buildPageFace(photo, i, false));
-          if (i < leafCount - 1) {
-            pageEl.appendChild(buildBlankFace());
-          } else {
-            pageEl.appendChild(buildBackCoverFace());
-          }
+          pageEl.appendChild(buildBlankFace());
         }
 
         container.appendChild(pageEl);
@@ -881,7 +879,8 @@
       const photoBox = document.createElement('div');
       photoBox.className = 'album-photo';
       const img = document.createElement('img');
-      img.src = photo.src;
+      img.dataset.src = photo.src;
+      img.loading = 'lazy';
       img.alt = 'Kỷ niệm';
       photoBox.appendChild(img);
 
@@ -910,6 +909,7 @@
         letter.style.display = 'none';
         buildAlbumPages();
         currentAlbumPage = 0;
+        loadNearbyAlbumImages();
         updateAlbumNavButtons();
         album.style.display = 'block';
         requestAnimationFrame(() => {
@@ -964,12 +964,26 @@
         pageEl.classList.remove('flipped');
         pageEl.style.zIndex = pageEl.dataset.zIndex;
       }
+      loadNearbyAlbumImages();
       updateAlbumNavButtons();
+    }
+
+    // CHỈ GÁN SRC THẬT CHO ẢNH GẦN TRANG ĐANG XEM ĐỂ TRÁNH TẢI 40+ ẢNH FULL-SIZE CÙNG LÚC (GÂY CRASH TRÊN MOBILE)
+    function loadNearbyAlbumImages() {
+      const RADIUS = 3;
+      const from = Math.max(0, currentAlbumPage - RADIUS);
+      const to = Math.min(albumPageEls.length - 1, currentAlbumPage + RADIUS);
+      for (let i = from; i <= to; i++) {
+        albumPageEls[i].querySelectorAll('img[data-src]').forEach((img) => {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        });
+      }
     }
 
     function updateAlbumNavButtons() {
       document.getElementById('albumPrevBtn').disabled = currentAlbumPage === 0;
-      document.getElementById('albumNextBtn').disabled = currentAlbumPage === albumPageEls.length;
+      document.getElementById('albumNextBtn').disabled = currentAlbumPage === albumPageEls.length - 1;
     }
   </script>
 </body>
